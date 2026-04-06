@@ -99,3 +99,101 @@ if bar_button:
 
     # Muestra el gráfico en Streamlit
     st.plotly_chart(Bar_fig)
+
+# "===============Gráfico de Dispersión con Plotly================="
+
+# Crear un boton para crear un Grafico de dispersion para mostrar la relacion entre el odometro y el precio.
+st.header("Gráfico de Dispersión: Relación entre Odómetro y Precio")
+
+st.write("Este gráfico de dispersión muestra la relación entre el odómetro (kilometraje) y el precio de los vehículos. Cada punto representa un vehículo, y la posición en el eje horizontal indica su kilometraje, mientras que la posición en el eje vertical indica su precio. Puedes usar este gráfico para identificar tendencias, como si los vehículos con mayor kilometraje tienden a tener precios más bajos. Haz clic en el botón para generar el gráfico de dispersión.")
+
+# Botón para crear el gráfico de dispersión
+scatter_button = st.button("Crear gráfico de dispersión")
+
+if scatter_button:
+    # Crea un gráfico de dispersión utilizando Plotly para mostrar la relación entre odómetro y precio
+    scatter_fig = go.Figure(data=go.Scatter(
+        x=df['odometer'],  # Valores del eje x: kilometraje del vehículo
+        y=df['price'],     # Valores del eje y: precio del vehículo
+        mode='markers',    # Modo de visualización: puntos (markers)
+        marker=dict(       # Configuración de los marcadores (puntos)
+            color='blue',  # Color de los puntos
+            size=10,       # Tamaño de los puntos
+            opacity=0.6    # Transparencia de los puntos
+        )
+    ))
+
+    # Actualiza el layout del gráfico con títulos, estilos y configuración de visualización
+    scatter_fig.update_layout(title_text='Relación entre Odómetro y Precio',
+                              title_x=0.35,  # Posición del título (centrado)
+                              xaxis_title_text='Odómetro (km)', yaxis_title_text='Precio ($)',
+                              # Grid del eje x
+                              xaxis_showgrid=True, xaxis_gridcolor='rgba(200, 200, 200, 0.3)',
+                              # Grid del eje y
+                              yaxis_showgrid=True, yaxis_gridcolor='rgba(200, 200, 200, 0.3)'
+                              )
+
+    # Muestra el gráfico en Streamlit
+    st.plotly_chart(scatter_fig)
+
+# "===============Graficos de Histogramas con Plotly================="
+
+# Crear un set de Check boxes mas un boton para crear el grafico seleccionado: uno que haga un histograma de "Condicion vs año del modelo" y otro dela distribución del odómetro.
+st.header("Gráfico de Histograma: Distribución de Condición vs Año del Modelo y Distribución del Odómetro")
+st.write("En esta sección, puedes seleccionar qué histogramas deseas crear para analizar la distribución de la condición de los vehículos en relación con el año del modelo, o la distribución del odómetro. Selecciona las opciones deseadas y haz clic en el botón para generar los gráficos.")
+
+st.checkbox("Condición vs Año del Modelo",
+            key="hist_condition_year")
+st.checkbox("Distribución del Odómetro",
+            key="hist_odometer")
+
+# Botón para crear los histogramas seleccionados
+hist_button = st.button("Crear histogramas seleccionados")
+
+if hist_button:
+    if st.session_state.hist_condition_year:
+        # Crea un gráfico de histograma para mostrar la distribución de la condición de los vehículos en relación con el año del modelo
+        hist_condition_year_fig = go.Figure()
+
+        # Agrega un histograma para cada condición de vehículo
+        for condition in df['condition'].unique():
+            hist_condition_year_fig.add_trace(go.Histogram(
+                # Año del modelo para la condición actual
+                x=df[df['condition'] == condition]['model_year'],
+                name=condition,  # Nombre de la traza (condición)
+                opacity=0.75     # Opacidad de las barras
+            ))
+
+        # Actualiza el layout del gráfico con títulos, estilos y configuración de visualización
+        hist_condition_year_fig.update_layout(title_text='Distribución de Condición vs Año del Modelo',
+                                              # Posición del título (centrado)
+                                              title_x=0.35,
+                                              xaxis_title_text='Año del Modelo', yaxis_title_text='Cantidad de Vehículos',
+                                              barmode='overlay',  # Superpone las barras para diferentes condiciones
+                                              xaxis_showgrid=True, xaxis_gridcolor='rgba(200, 200, 200, 0.3)',
+                                              yaxis_showgrid=True, yaxis_gridcolor='rgba(200, 200, 200, 0.3)'
+                                              )
+
+        # Muestra el gráfico en Streamlit
+        st.plotly_chart(hist_condition_year_fig)
+
+    if st.session_state.hist_odometer:
+        # Crea un gráfico de histograma para mostrar la distribución del odómetro (kilometraje) de los vehículos
+        hist_odometer_fig = go.Figure(data=go.Histogram(
+            x=df['odometer'],  # Valores del eje x: kilometraje del vehículo
+            nbinsx=50,        # Número de bins (barras) en el histograma
+            marker_color='green',  # Color de las barras
+            opacity=0.75      # Opacidad de las barras
+        ))
+
+        # Actualiza el layout del gráfico con títulos, estilos y configuración de visualización
+        hist_odometer_fig.update_layout(title_text='Distribución del Odómetro',
+                                        # Posición del título (centrado)
+                                        title_x=0.35,
+                                        xaxis_title_text='Odómetro (km)', yaxis_title_text='Cantidad de Vehículos',
+                                        xaxis_showgrid=True, xaxis_gridcolor='rgba(200, 200, 200, 0.3)',
+                                        yaxis_showgrid=True, yaxis_gridcolor='rgba(200, 200, 200, 0.3)'
+                                        )
+
+        # Muestra el gráfico en Streamlit
+        st.plotly_chart(hist_odometer_fig)
