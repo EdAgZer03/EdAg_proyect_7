@@ -6,7 +6,7 @@ import streamlit as st
 
 # Carga el dataset
 df = pd.read_csv(
-    'C:\\Users\\ZeroZ\\TT_proyects\\my_proyect_7\\vehicles_us.csv')
+    'vehicles_us.csv')
 
 # "===============Estructura de Titulo y Subtitulo inicial================="
 
@@ -136,7 +136,7 @@ if scatter_button:
     # Muestra el gráfico en Streamlit
     st.plotly_chart(scatter_fig)
 
-# "===============Graficos de Histogramas con Plotly================="
+# "===============Grafico de Histograma con Plotly================="
 
 # Crear un set de Check boxes mas un boton para crear el grafico seleccionado: uno que haga un histograma de "Condicion vs año del modelo" y otro dela distribución del odómetro.
 st.header("Gráfico de Histograma: Distribución de Condición vs Año del Modelo y Distribución del Odómetro")
@@ -197,3 +197,58 @@ if hist_button:
 
         # Muestra el gráfico en Streamlit
         st.plotly_chart(hist_odometer_fig)
+
+# "===============Histograma Comparativo de Precios por Marca================="
+
+st.header("Histograma Comparativo de Precios por Marca")
+
+st.write("Selecciona dos marcas para comparar la distribución de sus precios mediante un histograma. La primera marca se mostrará en rojo y la segunda en azul.")
+
+# Obtener la lista de marcas únicas ordenadas
+brand_list = sorted(df_filtered['brand'].unique())
+
+# Selectbox para la primera marca
+brand1 = st.selectbox("Selecciona la primera marca", brand_list, key="brand1")
+
+# Selectbox para la segunda marca
+brand2 = st.selectbox("Selecciona la segunda marca", brand_list, key="brand2")
+
+# Botón para crear el histograma comparativo
+compare_button = st.button("Crear histograma comparativo")
+
+if compare_button:
+    # Filtrar los datos para cada marca
+    df_brand1 = df_filtered[df_filtered['brand'] == brand1]
+    df_brand2 = df_filtered[df_filtered['brand'] == brand2]
+
+    # Crear la figura de Plotly
+    compare_fig = go.Figure()
+
+    # Agregar histograma para la primera marca (Azul)
+    compare_fig.add_trace(go.Histogram(
+        x=df_brand1['price'],
+        name=brand1,
+        marker_color='blue'
+    ))
+
+    # Agregar histograma para la segunda marca (rojo)
+    compare_fig.add_trace(go.Histogram(
+        x=df_brand2['price'],
+        name=brand2,
+        marker_color='red'
+    ))
+    # Actualizar el layout del gráfico
+    compare_fig.update_layout(
+        title_text=f'Comparación de Precios: {brand1} (Azul) vs {brand2} (Rojo)',
+        title_x=0.25,
+        xaxis_title_text='Precio ($)',
+        yaxis_title_text='Frecuencia',
+        barmode='overlay',  # Superponer los histogramas
+        xaxis_showgrid=True,
+        xaxis_gridcolor='rgba(200, 200, 200, 0.3)',
+        yaxis_showgrid=True,
+        yaxis_gridcolor='rgba(200, 200, 200, 0.3)'
+    )
+
+    # Mostrar el gráfico en Streamlit
+    st.plotly_chart(compare_fig)

@@ -11,11 +11,17 @@ El flujo de la aplicación es el siguiente:
 - Muestra el `DataFrame` resultante en un `st.dataframe`.
 - Genera un gráfico de barras que muestra el precio promedio por tipo de vehículo (`type`) solo cuando el usuario presiona el botón.
 - El gráfico usa colores personalizados por tipo de vehículo, etiquetas de precio dentro de las barras y formato visual adaptado para legibilidad.
+- Genera un gráfico de dispersión interactivo para analizar la relación entre el kilometraje (odómetro) y el precio.
+- Permite al usuario elegir mediante checkboxes qué histogramas visualizar: "Condición vs Año del Modelo" o "Distribución del Odómetro".
+- Incluye un histograma comparativo que permite seleccionar dos marcas diferentes mediante menús desplegables para comparar visualmente sus distribuciones de precios.
 
 ## Características
 - Vista previa interactiva del dataset.
 - Filtrado dinámico de marcas con más de 10000 anuncios.
 - Gráfico de barras de precio promedio por tipo de vehículo.
+- Gráfico de dispersión para análisis de tendencias entre precio y kilometraje.
+- Histogramas configurables para análisis de condición y año.
+- Herramienta de comparación de precios entre marcas específicas.
 - Visualización basada en `Plotly` para interacción y estilo.
 
 ## Dependencias
@@ -36,4 +42,3 @@ streamlit run app.py
 
 ## Nota
 Asegúrate de que el archivo `vehicles_us.csv` esté accesible desde la ruta configurada en `app.py`.
-
