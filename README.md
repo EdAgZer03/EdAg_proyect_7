@@ -42,3 +42,8 @@ streamlit run app.py
 
 ## Nota
 Asegúrate de que el archivo `vehicles_us.csv` esté accesible desde la ruta configurada en `app.py`.
+
+
+## Versión **Demo** en el siguiente enlace: 
+
+https://edag-proyect-7.onrender.com/
