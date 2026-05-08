@@ -1,4 +1,4 @@
-# EdAg_proyect_7
+# Vizualizacion de Datos en APP Stream lit y Despliegue para uso. 
 
 ## Descripción técnica
 Esta aplicación usa `Streamlit` como marco web para presentar un análisis exploratorio de un dataset de vehículos y un gráfico de barras interactivo generado con `Plotly`.
