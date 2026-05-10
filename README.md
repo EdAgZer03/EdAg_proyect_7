@@ -1,3 +1,28 @@
+Actualización:
+
+# 🌐 App Streamlit — Visualización Dinámica de Datos
+
+**Resumen**  
+Aplicación web desarrollada con Streamlit para explorar y visualizar interactivamente datasets analizados en los proyectos.
+
+**Objetivo**  
+Proveer una interfaz interactiva para que stakeholders exploren métricas clave sin necesidad de ejecutar notebooks.
+
+---
+
+## 🔍 Qué hice
+- Construí la interfaz con filtros interactivos (fecha, segmento, plataforma).  
+- Integré gráficos dinámicos y tablas resumidas.  
+- Desplegué localmente y documenté pasos para correr la app.
+
+---
+
+## 🛠 Tecnologías
+Python · Streamlit · Pandas · Matplotlib/Altair · Heroku / Streamlit Cloud (opcional)
+
+---
+Descripcion 
+
 # Vizualizacion de Datos en APP Stream lit y Despliegue para uso. 
 
 ## Descripción técnica
